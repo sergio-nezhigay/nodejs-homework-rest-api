@@ -19,4 +19,11 @@ router.put(
   ctrl.updateContact
 );
 
+router.patch(
+  "/:id",
+  isValidId,
+  validateBody(schemas.updateStatusSchema),
+  ctrl.updateStatusContact
+);
+
 module.exports = router;

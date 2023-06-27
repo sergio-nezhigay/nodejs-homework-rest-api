@@ -51,9 +51,14 @@ const updateSchema = Joi.object({
   })
   .min(1);
 
+const updateStatusSchema = Joi.object({
+  favorite: Joi.boolean().required(),
+});
+
 const schemas = {
   addSchema,
   updateSchema,
+  updateStatusSchema,
 };
 
 const Contact = model("contact", contactSchema);
