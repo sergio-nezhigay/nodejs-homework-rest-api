@@ -1,7 +1,6 @@
 const express = require("express");
 const logger = require("morgan");
 const cors = require("cors");
-const requestIp = require("request-ip");
 require("dotenv").config();
 
 const contactsRouter = require("./routes/api/contacts");
@@ -10,15 +9,9 @@ const app = express();
 
 const formatsLogger = app.get("env") === "development" ? "dev" : "short";
 
-// Use custom token in the logging format
-logger.token("client-ip", (req) => requestIp.getClientIp(req));
-
-app.use(
-  logger(
-    ":client-ip - :method :url :status :response-time ms - :res[content-length]"
-  )
-);
+app.use(logger(formatsLogger));
 app.use(cors());
+
 app.use(express.json());
 
 app.use("/api/contacts", contactsRouter);
