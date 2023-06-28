@@ -9,7 +9,14 @@ const app = express();
 
 const formatsLogger = app.get("env") === "development" ? "dev" : "short";
 
-app.use(logger(formatsLogger));
+// app.use(logger(formatsLogger));
+// Use :remote-addr in the logging format
+app.use(
+  logger(
+    ":remote-addr - :method :url :status :response-time ms - :res[content-length]"
+  )
+);
+
 app.use(cors());
 
 app.use(express.json());

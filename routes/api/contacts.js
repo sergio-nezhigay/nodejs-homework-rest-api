@@ -23,7 +23,7 @@ router.patch(
   "/:id",
   isValidId,
   validateBody(schemas.updateStatusSchema),
-  ctrl.updateStatusContact
+  ctrl.updateContact
 );
 
 module.exports = router;
