@@ -7,6 +7,12 @@ const { schemas } = require("../../models/user");
 
 const router = express.Router();
 
+router.patch(
+  "/",
+  authenticate,
+  validateBody(schemas.updateSubscriptionSchema),
+  ctrl.updateSubscriptionUser
+);
 router.post("/register", validateBody(schemas.authSchema), ctrl.registerUser);
 
 router.post("/login", validateBody(schemas.authSchema), ctrl.loginUser);

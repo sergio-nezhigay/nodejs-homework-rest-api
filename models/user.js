@@ -4,6 +4,8 @@ const Joi = require("joi");
 
 const { handleMongooseError } = require("../helpers");
 
+const SUBSCRIPTION_OPTIONS = ["starter", "pro", "business"];
+
 const userSchema = new Schema({
   password: {
     type: String,
@@ -16,7 +18,7 @@ const userSchema = new Schema({
   },
   subscription: {
     type: String,
-    enum: ["starter", "pro", "business"],
+    enum: SUBSCRIPTION_OPTIONS,
     default: "starter",
   },
   token: String,
@@ -43,8 +45,21 @@ const authSchema = Joi.object({
   }),
 });
 
+const updateSubscriptionSchema = Joi.object({
+  subscription: Joi.string()
+    .valid(...SUBSCRIPTION_OPTIONS)
+    .required()
+    .messages({
+      "any.required": "missing field subscription",
+      "any.only": `subscription must be one of options: ${SUBSCRIPTION_OPTIONS.join(
+        ", "
+      )}`,
+    }),
+});
+
 const schemas = {
   authSchema,
+  updateSubscriptionSchema,
 };
 
 module.exports = { User, schemas };
