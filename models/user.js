@@ -2,7 +2,7 @@ const { Schema, model } = require("mongoose");
 const bCrypt = require("bcryptjs");
 const Joi = require("joi");
 
-const { handleMongooseError } = require("../middlewares");
+const { handleMongooseError } = require("../helpers");
 
 const userSchema = new Schema({
   password: {

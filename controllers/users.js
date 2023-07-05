@@ -5,12 +5,7 @@ const { ctrlWrapper } = require("../helpers");
 const { HttpError } = require("../helpers");
 
 require("dotenv").config();
-const secret = process.env.SECRET;
-
-const listUsers = async (req, res) => {
-  const result = await User.find({}, "-createdAt -updatedAt");
-  res.json(result);
-};
+const { SECRET_KEY } = process.env;
 
 const registerUser = async (req, res, next) => {
   const { email, password } = req.body;
@@ -42,7 +37,8 @@ const loginUser = async (req, res, next) => {
     id: user.id,
   };
 
-  const token = jwt.sign(payload, secret, { expiresIn: "24h" });
+  const token = jwt.sign(payload, SECRET_KEY, { expiresIn: "24h" });
+  await User.findByIdAndUpdate(user._id, { token });
   res.json({
     token,
     user: {
@@ -52,8 +48,19 @@ const loginUser = async (req, res, next) => {
   });
 };
 
+const logoutUser = async (req, res, next) => {
+  await User.findByIdAndUpdate(req.user._id, { token: "" });
+  res.status(204).json();
+};
+
+const currentUser = async (req, res) => {
+  const { email, subscription } = req.user;
+  res.status(200).json({ email, subscription });
+};
+
 module.exports = {
-  listUsers: ctrlWrapper(listUsers),
   registerUser: ctrlWrapper(registerUser),
   loginUser: ctrlWrapper(loginUser),
+  logoutUser: ctrlWrapper(logoutUser),
+  currentUser: ctrlWrapper(currentUser),
 };
