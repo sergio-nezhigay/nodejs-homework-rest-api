@@ -6,7 +6,8 @@ const logger = require("morgan");
 const cors = require("cors");
 require("dotenv").config();
 const uploadDir = path.join(process.cwd(), "uploads");
-const storeAvatars = path.join(process.cwd(), "public", "avatars");
+const publicDir = path.join(process.cwd(), "public");
+const storeAvatars = path.join(publicDir, "avatars");
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -25,7 +26,7 @@ const upload = multer({
 });
 
 const app = express();
-app.use(express.static(storeAvatars));
+app.use(express.static(publicDir));
 
 const contactsRouter = require("./routes/api/contacts");
 const usersRouter = require("./routes/api/users");
