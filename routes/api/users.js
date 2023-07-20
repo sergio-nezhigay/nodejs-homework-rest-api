@@ -24,5 +24,7 @@ router.patch(
 router.post("/login", validateBody(schemas.authSchema), ctrl.loginUser);
 router.post("/logout", authenticate, ctrl.logoutUser);
 router.get("/current", authenticate, ctrl.currentUser);
+router.get("/verify", validateBody(schemas.verifyEmailSchema), ctrl.verifyUser);
+router.get("/verify/:verificationToken", ctrl.verifyToken);
 
 module.exports = router;

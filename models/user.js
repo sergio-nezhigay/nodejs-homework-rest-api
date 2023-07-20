@@ -26,6 +26,14 @@ const userSchema = new Schema({
     required: [true, "avatarURL is required"],
   },
   token: String,
+  verify: {
+    type: Boolean,
+    default: false,
+  },
+  verificationToken: {
+    type: String,
+    default: "",
+  },
 });
 
 userSchema.methods.setPassword = function (password) {
@@ -49,6 +57,14 @@ const authSchema = Joi.object({
   }),
 });
 
+const verifyEmailSchema = Joi.object({
+  email: Joi.string()
+    .required()
+    .messages({
+      "any.required": "Joi validation error: missing required field email",
+    }),
+});
+
 const updateSubscriptionSchema = Joi.object({
   subscription: Joi.string()
     .valid(...SUBSCRIPTION_OPTIONS)
@@ -64,6 +80,7 @@ const updateSubscriptionSchema = Joi.object({
 const schemas = {
   authSchema,
   updateSubscriptionSchema,
+  verifyEmailSchema,
 };
 
 module.exports = { User, schemas };
