@@ -3,7 +3,7 @@ const { nanoid } = require("nanoid");
 const { HttpError, sendConfirmMail } = require("../../helpers");
 const { User } = require("../../models/user");
 
-const verifyUser = async (req, res, next) => {
+const reSendVerifyEmail = async (req, res, next) => {
   const { email } = req.body;
   const user = await User.findOne({ email });
   if (!user) {
@@ -24,4 +24,4 @@ const verifyUser = async (req, res, next) => {
   });
 };
 
-module.exports = verifyUser;
+module.exports = reSendVerifyEmail;
