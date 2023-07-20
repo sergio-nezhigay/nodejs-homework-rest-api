@@ -15,7 +15,7 @@ const sendMail = async (msg) => {
   await sgMail.send({ ...msgTemplate, ...msg });
 };
 
-const sendConfirmMail = async ({ email, verificationToken }) => {
+const sendConfirmMail = async ({ email: to, verificationToken }) => {
   const subject = `Activate your ${SITE_URL} account`;
   const html = `
   <p>Hi there,</p>
@@ -24,7 +24,7 @@ const sendConfirmMail = async ({ email, verificationToken }) => {
   <br>
   <p>Best,<br>the Team.</p>
   `;
-  await sendMail({ email, html, subject });
+  await sendMail({ to, html, subject });
 };
 
 module.exports = sendConfirmMail;
