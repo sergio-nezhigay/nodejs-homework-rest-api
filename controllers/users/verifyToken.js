@@ -1,5 +1,5 @@
 const { HttpError } = require("../../helpers");
-const { User } = require("../../models/user");
+const { User } = require("../../models");
 
 const verifyToken = async (req, res, next) => {
   const { verificationToken } = req.params;

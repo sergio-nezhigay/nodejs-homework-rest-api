@@ -1,8 +1,9 @@
 const gravatar = require("gravatar");
 const { nanoid } = require("nanoid");
 
-const { HttpError, sendConfirmMail } = require("../../helpers");
-const { User } = require("../../models/user");
+const { HttpError } = require("../../helpers");
+const sendConfirmMail = require("../../services/email/sendMail");
+const { User } = require("../../models");
 
 const registerUser = async (req, res, next) => {
   const { email, password } = req.body;

@@ -1,7 +1,8 @@
 const { nanoid } = require("nanoid");
 
-const { HttpError, sendConfirmMail } = require("../../helpers");
-const { User } = require("../../models/user");
+const { HttpError } = require("../../helpers");
+const sendConfirmMail = require("../../services/email/sendMail");
+const { User } = require("../../models");
 
 const reSendVerifyEmail = async (req, res, next) => {
   const { email } = req.body;

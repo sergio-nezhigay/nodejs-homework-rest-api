@@ -2,8 +2,9 @@ const Jimp = require("jimp");
 const path = require("path");
 const fs = require("fs").promises;
 
-const { User } = require("../../models/user");
+const { User } = require("../../models");
 const { HttpError } = require("../../helpers");
+
 const publicDir = path.join(process.cwd(), "public");
 const storeAvatars = path.join(publicDir, "avatars");
 
