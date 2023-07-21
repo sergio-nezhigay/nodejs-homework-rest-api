@@ -1,14 +1,14 @@
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
-const { User } = require("../../models/user");
+const { User } = require("../../models");
 const { HttpError } = require("../../helpers");
 const { SECRET_KEY } = process.env;
 
 const loginUser = async (req, res, next) => {
   const { email, password } = req.body;
   const user = await User.findOne({ email });
-  if (!user || !user.validPassword(password)) {
+  if (!user || !user.validPassword(password) || !user.verify) {
     throw HttpError(401, "Email or password is wrong");
   }
 

@@ -1,7 +1,9 @@
 const gravatar = require("gravatar");
+const { nanoid } = require("nanoid");
 
 const { HttpError } = require("../../helpers");
-const { User } = require("../../models/user");
+const sendConfirmMail = require("../../services/email/sendMail");
+const { User } = require("../../models");
 
 const registerUser = async (req, res, next) => {
   const { email, password } = req.body;
@@ -11,7 +13,11 @@ const registerUser = async (req, res, next) => {
   }
 
   const avatarURL = gravatar.url(email);
-  const newUser = new User({ email, avatarURL });
+  const verificationToken = nanoid();
+  const newUser = new User({ email, avatarURL, verificationToken });
+
+  await sendConfirmMail({ email, verificationToken });
+
   newUser.setPassword(password);
   const savedUser = await newUser.save();
 
