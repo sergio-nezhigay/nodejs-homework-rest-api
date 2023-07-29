@@ -38,14 +38,14 @@ const requiredField = (fieldName) =>
 
 const addSchema = Joi.object({
   name: requiredField("name"),
-  email: requiredField("email"),
+  // email: requiredField("email"),
   phone: requiredField("phone"),
   favorite: Joi.boolean(),
 });
 
 const updateSchema = Joi.object({
   name: Joi.string().optional(),
-  email: Joi.string().optional(),
+  // email: Joi.string().optional(),
   phone: Joi.string().optional(),
   favorite: Joi.boolean().optional(),
 })
